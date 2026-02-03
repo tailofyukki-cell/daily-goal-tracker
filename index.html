@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1日の目標管理</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 1日の目標管理</h1>
+            <p class="subtitle">今日の目標を最大5つまで設定しましょう</p>
+        </header>
+
+        <main>
+            <!-- タスク入力セクション -->
+            <section class="input-section">
+                <div class="input-group">
+                    <input 
+                        type="text" 
+                        id="taskInput" 
+                        placeholder="今日のタスクを入力してください"
+                        maxlength="100"
+                    >
+                    <button id="addTaskBtn" class="btn btn-primary">追加</button>
+                </div>
+                <div id="errorMessage" class="error-message"></div>
+            </section>
+
+            <!-- タスク一覧セクション -->
+            <section class="task-list-section">
+                <h2>登録タスク (<span id="taskCount">0</span>/5)</h2>
+                <ul id="taskList" class="task-list"></ul>
+            </section>
+
+            <!-- 目標設定ボタン -->
+            <section class="action-section">
+                <button id="setGoalBtn" class="btn btn-success">🎯 目標設定</button>
+                <button id="resetBtn" class="btn btn-secondary">🔄 今日をリセット</button>
+            </section>
+
+            <!-- 進捗セクション -->
+            <section id="progressSection" class="progress-section hidden">
+                <h2>今日の進捗</h2>
+                <div class="progress-info">
+                    <span class="progress-text">達成率: <span id="progressPercent">0</span>%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div id="progressBar" class="progress-bar"></div>
+                </div>
+                <div id="taskButtons" class="task-buttons"></div>
+            </section>
+
+            <!-- 達成メッセージ -->
+            <div id="achievementMessage" class="achievement-message hidden">
+                <div class="achievement-content">
+                    <h2>🎉 今日の目標達成！</h2>
+                    <p>おめでとうございます！全てのタスクを完了しました！</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 紙吹雪キャンバス -->
+    <canvas id="confettiCanvas"></canvas>
+
+    <script src="main.js"></script>
+</body>
+</html>
