@@ -3,24 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1日の目標管理</title>
+    <title>今日の前進ログ</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>📝 1日の目標管理</h1>
-            <p class="subtitle">今日の目標を最大5つまで設定しましょう</p>
+            <h1>🌱 今日の前進ログ</h1>
+            <p class="subtitle">できたことを拾う。小さな前進を積み上げる。</p>
         </header>
 
         <main>
-            <!-- タスク入力セクション -->
+            <!-- 今日の前進メッセージエリア -->
+            <section id="progressMessageSection" class="progress-message-section hidden">
+                <div id="progressMessage" class="progress-message"></div>
+            </section>
+
+            <!-- 今日できたこと一覧 -->
+            <section id="doneSection" class="done-section hidden">
+                <h2>✨ 今日できたこと</h2>
+                <ul id="doneList" class="done-list"></ul>
+                <div class="done-count-area">
+                    <span id="doneCountBadge" class="done-count-badge">0個できた</span>
+                </div>
+            </section>
+
+            <!-- 積み上げバー（サブ表示） -->
+            <section id="stackBarSection" class="stack-bar-section hidden">
+                <div class="stack-bar-label">今日の積み上げ</div>
+                <div class="stack-bar-container">
+                    <div id="stackBar" class="stack-bar"></div>
+                </div>
+            </section>
+
+            <!-- 今日やれたらいいこと（候補）入力 -->
             <section class="input-section">
+                <h2>📋 今日やれたらいいこと</h2>
+                <p class="section-hint">最大5つまで。できなくても大丈夫。</p>
                 <div class="input-group">
-                    <input 
-                        type="text" 
-                        id="taskInput" 
-                        placeholder="今日のタスクを入力してください"
+                    <input
+                        type="text"
+                        id="taskInput"
+                        placeholder="やれたらいいことを入力"
                         maxlength="100"
                     >
                     <button id="addTaskBtn" class="btn btn-primary">追加</button>
@@ -28,38 +52,52 @@
                 <div id="errorMessage" class="error-message"></div>
             </section>
 
-            <!-- タスク一覧セクション -->
+            <!-- 候補一覧セクション -->
             <section class="task-list-section">
-                <h2>登録タスク (<span id="taskCount">0</span>/5)</h2>
+                <h3>候補リスト (<span id="taskCount">0</span>/5)</h3>
                 <ul id="taskList" class="task-list"></ul>
             </section>
 
-            <!-- 目標設定ボタン -->
+            <!-- アクションボタン -->
             <section class="action-section">
-                <button id="setGoalBtn" class="btn btn-success">🎯 目標設定</button>
-                <button id="resetBtn" class="btn btn-secondary">🔄 今日をリセット</button>
+                <button id="setGoalBtn" class="btn btn-success">🌿 今日の候補を並べる</button>
+                <button id="resetBtn" class="btn btn-secondary">🌅 新しい1日を始める</button>
             </section>
 
-            <!-- 進捗セクション -->
+            <!-- 進捗ボタン群（候補を並べた後に表示） -->
             <section id="progressSection" class="progress-section hidden">
-                <h2>今日の進捗</h2>
-                <div class="progress-info">
-                    <span class="progress-text">達成率: <span id="progressPercent">0</span>%</span>
-                </div>
-                <div class="progress-bar-container">
-                    <div id="progressBar" class="progress-bar"></div>
-                </div>
+                <h2>今日やれたらいいこと</h2>
+                <p class="section-hint">できたものをタップ。全部じゃなくていい。</p>
                 <div id="taskButtons" class="task-buttons"></div>
             </section>
 
-            <!-- 達成メッセージ -->
-            <div id="achievementMessage" class="achievement-message hidden">
-                <div class="achievement-content">
-                    <h2>🎉 今日の目標達成！</h2>
-                    <p>おめでとうございます！全てのタスクを完了しました！</p>
+            <!-- できたことを追加（予定外の成果） -->
+            <section class="extra-done-section">
+                <h2>💡 できたことを追加</h2>
+                <p class="section-hint">予定外でもできたことがあれば、ここに記録しよう。</p>
+                <div class="input-group">
+                    <input
+                        type="text"
+                        id="extraDoneInput"
+                        placeholder="例：洗濯できた、5分だけ作業できた"
+                        maxlength="100"
+                    >
+                    <button id="addExtraDoneBtn" class="btn btn-accent">追加</button>
                 </div>
-            </div>
+                <div id="extraErrorMessage" class="error-message"></div>
+            </section>
         </main>
+    </div>
+
+    <!-- ボーナス達成モーダル -->
+    <div id="bonusModal" class="bonus-modal hidden">
+        <div class="bonus-content">
+            <div class="bonus-emoji">🎉</div>
+            <h2>ボーナス達成！</h2>
+            <p>全部できた。今日は特別な日。</p>
+            <p class="bonus-sub">完璧じゃなくていい日もある。でも今日はやりきった。</p>
+            <button id="closeBonusBtn" class="btn btn-primary">ありがとう</button>
+        </div>
     </div>
 
     <!-- 紙吹雪キャンバス -->
