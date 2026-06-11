@@ -361,7 +361,15 @@ class UIManager {
         this._renderStackBar();
 
         const newState = this.log.taskStates[taskId];
-        if (newState !== 'pending') {
+        const doneCount = this.log.getDoneCount();
+        if (newState === 'later') {
+            // また今度：既にできたことがあればdoneメッセージを優先、なければlaterメッセージ
+            if (doneCount > 0) {
+                this._renderProgressMessage('done');
+            } else {
+                this._renderProgressMessage('later');
+            }
+        } else if (newState !== 'pending') {
             this._renderProgressMessage(newState);
         }
 
@@ -523,7 +531,7 @@ class UIManager {
             msg = pickMessage('later');
         } else if (trigger === 'partial') {
             msg = pickMessage('partial');
-        } else if (trigger === 'extra' || doneCount >= 1) {
+        } else if (trigger === 'done' || trigger === 'extra' || doneCount >= 1) {
             if (doneCount === 1) {
                 msg = pickMessage('first');
             } else {
